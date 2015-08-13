@@ -4,7 +4,7 @@ require 'test_helper'
 
 describe "DSL" do
 	it "defines a packlist with a title and description" do
-		pl = packlist "packlist title", "packlist description" do
+		pl = PackList::packlist "packlist title", "packlist description" do
 		end
 
 		pl.name.must_equal "packlist title"
@@ -12,7 +12,7 @@ describe "DSL" do
 	end
 
 	it "can define a packlist with only a title" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 		end
 
 		pl.name.must_equal "packlist title"
@@ -20,7 +20,7 @@ describe "DSL" do
 	end		
 
 	it "can define a category with only a title" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "category title"
 		end
 
@@ -29,7 +29,7 @@ describe "DSL" do
 	end		
 
 	it "defines categories in a packlist" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "first category", "first category description" do
 			end
 
@@ -47,7 +47,7 @@ describe "DSL" do
 	end		
 
 	it "defines items in a category packlist" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "shelter" do
 				item "tent", "Big Agnes Copper Spur UL3", 4, :lb
 			end
@@ -60,7 +60,7 @@ describe "DSL" do
 	end		
 
 	it "can specify quantity for an item" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "shelter" do
 				item "stakes", "MSR Mini Groundhog", 10, :g, 6
 			end
@@ -71,7 +71,7 @@ describe "DSL" do
 	end		
 
 	it "can specify worn items" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "clothing" do
 				worn "shirt", "short sleeve shirt", 6, :oz
 			end
@@ -83,7 +83,7 @@ describe "DSL" do
 	end		
 
 	it "can specify consumable items" do
-		pl = packlist "packlist title" do
+		pl = PackList::packlist "packlist title" do
 			category "food" do
 				consumable "candy", "M&Ms", 2, :oz
 			end
