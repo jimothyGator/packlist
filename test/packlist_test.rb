@@ -91,6 +91,47 @@ describe Category do
 
 		cat.total_weight.ounces.must_equal 0
 	end
+
+	it 'does not include consumable items in pack weight' do
+		cat = Category.new("Cooking")
+		cat << Item.new("stove", "fancy feast", 18, :g)
+		cat << Item.new("fuel bottle", "soda bottle", 28, :g)
+		cat << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+		weight = cat.pack_weight
+		weight.grams.must_equal 46
+	end
+
+	it 'only includes consumable items in consumable weight' do
+		cat = Category.new("Cooking")
+		cat << Item.new("stove", "fancy feast", 18, :g)
+		cat << Item.new("fuel bottle", "soda bottle", 28, :g)
+		cat << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+		weight = cat.consumable_weight
+		weight.grams.must_be_close_to 387, 0.5
+	end
+
+	it 'does not include worn items in pack weight' do
+		cat = Category.new("Clothing")
+		cat << Item.new("socks", "wool socks", 85, :g, :worn)
+		cat << Item.new("shirt", "short sleeves", 180, :g, :worn)
+		cat << Item.new("extra socks", "wool socks", 85, :g)
+
+		weight = cat.pack_weight
+		weight.grams.must_equal 85
+	end
+
+	it 'only includes worn items in worn weight' do
+		cat = Category.new("Clothing")
+		cat << Item.new("socks", "wool socks", 85, :g, :worn)
+		cat << Item.new("shirt", "short sleeves", 180, :g, :worn)
+		cat << Item.new("extra socks", "wool socks", 85, :g)
+
+		weight = cat.worn_weight
+		weight.grams.must_equal 265
+	end
+
 end
 
 describe PackList do
@@ -131,6 +172,61 @@ describe PackList do
 		total = pack.total_weight
 		total.ounces.must_be_close_to 28, 0.5
 	end
+
+	it 'does not include consumable and worn items in pack weight' do
+		c1 = Category.new("Cooking")
+		c1 << Item.new("stove", "fancy feast", 18, :g)
+		c1 << Item.new("fuel bottle", "soda bottle", 28, :g)
+		c1 << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+		c2 = Category.new("Clothing")
+		c2 << Item.new("socks", "wool socks", 85, :g, :worn)
+		c2 << Item.new("shirt", "short sleeves", 180, :g, :worn)
+		c2 << Item.new("extra socks", "wool socks", 85, :g)
+
+		pack = PackList.new "Fall backpacking trip"
+		pack << c1 << c2
+
+		weight = pack.pack_weight
+		weight.grams.must_equal 131
+	end
+
+	it 'only includes consumable items in consumable weight' do
+		c1 = Category.new("Cooking")
+		c1 << Item.new("stove", "fancy feast", 18, :g)
+		c1 << Item.new("fuel bottle", "soda bottle", 28, :g)
+		c1 << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+		c2 = Category.new("Clothing")
+		c2 << Item.new("socks", "wool socks", 85, :g, :worn)
+		c2 << Item.new("shirt", "short sleeves", 180, :g, :worn)
+		c2 << Item.new("extra socks", "wool socks", 85, :g)
+
+		pack = PackList.new "Fall backpacking trip"
+		pack << c1 << c2
+
+		weight = pack.consumable_weight
+		weight.grams.must_be_close_to 387, 0.5
+	end
+
+	it 'only includes worn items in worn weight' do
+		c1 = Category.new("Cooking")
+		c1 << Item.new("stove", "fancy feast", 18, :g)
+		c1 << Item.new("fuel bottle", "soda bottle", 28, :g)
+		c1 << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+		c2 = Category.new("Clothing")
+		c2 << Item.new("socks", "wool socks", 85, :g, :worn)
+		c2 << Item.new("shirt", "short sleeves", 180, :g, :worn)
+		c2 << Item.new("extra socks", "wool socks", 85, :g)
+
+		pack = PackList.new "Fall backpacking trip"
+		pack << c1 << c2
+
+		weight = pack.worn_weight
+		weight.grams.must_equal 265
+	end
+
 
 end
 
