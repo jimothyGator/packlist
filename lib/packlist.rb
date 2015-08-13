@@ -50,7 +50,7 @@ end
 
 
 class Item
-  attr_accessor :name, :description, :weight, :quantity, :type
+  attr_accessor :name, :description, :weight, :quantity
 
   def initialize(name, description, weight, units=:oz, type=nil, quantity: 1)
     @name, @description, @quantity, @type = name, description, quantity, type
@@ -60,6 +60,15 @@ class Item
   def total_weight
     return @weight * @quantity
   end
+
+  def worn?
+    return @type == :worn
+  end
+
+  def consumable?
+    return @type == :consumable
+  end
+
 end
 
 class Category
@@ -80,17 +89,17 @@ class Category
   end
 
   def worn_weight
-    items = @items.select {|item| item.type == :worn }
+    items = @items.select {|item| item.worn? }
     items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
   end
 
   def consumable_weight
-    items = @items.select {|item| item.type == :consumable }
+    items = @items.select {|item| item.consumable? }
     items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
   end
 
   def pack_weight
-    items = @items.select {|item| item.type.nil? }
+    items = @items.reject {|item| item.worn? || item.consumable? }
     items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
   end
 
