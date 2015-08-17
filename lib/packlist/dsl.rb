@@ -36,6 +36,10 @@ module PackList
       add_item(name, description, weight, units, :consumable, quantity)
     end
 
+    def food(name, description, weight, units=:oz, quantity=1)
+      add_item(name, description, weight, units, :consumable, quantity)
+    end
+
     private 
 
     def add_item(name, description, weight, units, type, quantity)

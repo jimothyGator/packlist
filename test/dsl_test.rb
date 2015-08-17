@@ -94,5 +94,17 @@ describe "DSL" do
 		item.worn?.must_equal false
 	end		
 
+	it "marks food items as consumable" do
+		pl = PackList::packlist "packlist title" do
+			category "food" do
+				food "candy", "M&Ms", 2, :oz
+			end
+		end
+
+		item = pl.categories.first.items.first;
+		item.consumable?.must_equal true
+		item.worn?.must_equal false
+	end		
+
 
 end
