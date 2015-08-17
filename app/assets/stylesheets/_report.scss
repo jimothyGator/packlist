@@ -1,0 +1,95 @@
+div.categories {
+		@include span-columns(12);
+    @include media($desktop) {
+		@include span-columns(6);
+	}
+
+    @media print {
+        @include span-columns(6);
+    	
+    }
+}
+
+header {
+	@include span-columns(12);
+}
+
+.summary {
+    @include media($desktop) {
+		@include span-columns(6);
+		@include clearfix;
+		clear: both;
+	}
+}
+
+h2 {
+	border-bottom: solid 2px black;
+	margin-bottom: 0;
+}
+
+
+td.quantity,
+td.pl-item-weight {
+	text-align: right;
+}
+
+div.category {
+	$checkmark-column: 1;
+	$type-column: 2;
+	$name-column: 3;
+	$quantity-column: 4;
+	$gram-weight-column: 5;
+	$ounce-weight-column: 6;
+
+	margin-bottom: 2em;
+
+    table {
+    	margin-top: 0;
+
+    	p {
+    		margin: 0;
+    	}
+
+    	.item-name {
+    		font-weight: bold;
+    	}
+
+    	tfoot {
+    		font-weight: bold;
+
+    		td {
+    			text-align: right;
+    			border-top: solid 2px #666;
+    		}
+    	}
+
+    	tbody {
+    	// Checkmark
+	    	td:nth-child(#{$checkmark-column}) {
+	    		width: 2em;
+	    	}
+
+	    	td:nth-child(#{$quantity-column}) {
+	    		width: 3em;
+	    	}
+
+	    	td:nth-child(#{$type-column}) {
+	    		width: 2em;
+	    		font-size: 125%;
+	    		font-weight: bold;
+	    	}
+
+	    	td:nth-child(#{$name-column}) {
+	    		width: auto;
+	    	}
+
+	    	td:nth-child(#{$gram-weight-column}) {
+	    		width: 6em;
+	    	}
+
+	    	td:nth-child(#{$ounce-weight-column}) {
+	    		width: 5em;
+	    	}
+	    }
+    }
+}

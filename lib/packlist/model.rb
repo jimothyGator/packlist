@@ -103,6 +103,14 @@ module PackList
       items.empty? ? Weight::ZERO : items.collect {|item| item.total_weight}.reduce(:+)
     end
 
+    def total_quantity
+      empty? ? 0 : @items.collect {|item| item.quantity}.reduce(:+)
+    end
+
+    def item_count
+      @items.length
+    end
+
   end
 
   class PackList
@@ -137,6 +145,14 @@ module PackList
 
     def base_weight
       empty? ? Weight::ZERO : @categories.collect {|category| category.base_weight}.reduce(:+)
+    end
+
+    def total_quantity
+      empty? ? 0 : @categories.collect {|category| category.total_quantity}.reduce(:+)
+    end
+
+    def item_count
+      empty? ? 0 : @categories.collect {|category| category.item_count}.reduce(:+)
     end
 
   end

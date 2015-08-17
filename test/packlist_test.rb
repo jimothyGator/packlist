@@ -1,4 +1,4 @@
-require 'packlist'
+require 'packlist/model'
 require 'test_helper'
 
 
@@ -134,6 +134,16 @@ module PackList
 			weight.grams.must_equal 265
 		end
 
+		it 'provides a total quantity' do
+			cat = Category.new("Clothing")
+			i1 = Item.new("shirt", "Merino wool shirt", 8)
+			i2 = Item.new("shorts", "Running shorts", 4)
+			i3 = Item.new("socks", "wool socks", 3, quantity: 2)
+			cat  << i1 << i2 << i3
+
+			cat.total_quantity.must_equal 4
+		end
+
 	end
 
 	describe PackList do
@@ -246,6 +256,22 @@ module PackList
 
 			weight = pack.worn_weight
 			weight.grams.must_equal 265
+		end
+
+		it 'provides a total quantity' do
+			c1 = Category.new("Clothing")
+			c1 << Item.new("shirt", "Merino wool shirt", 8)
+			c1 << Item.new("shorts", "Running shorts", 4)
+			c1 << Item.new("socks", "wool socks", 3, quantity: 2)
+
+			c2 = Category.new("Cooking")
+			c2 << Item.new("stove", "fancy feast", 18, :g)
+			c2 << Item.new("fuel bottle", "soda bottle", 28, :g)
+
+			pack = PackList.new "Fall backpacking trip"
+			pack << c1 << c2
+
+			pack.total_quantity.must_equal 6
 		end
 
 
