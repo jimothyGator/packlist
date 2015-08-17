@@ -94,13 +94,13 @@ module PackList
 			cat.total_weight.ounces.must_equal 0
 		end
 
-		it 'does not include consumable items in pack weight' do
+		it 'does not include consumable items in base weight' do
 			cat = Category.new("Cooking")
 			cat << Item.new("stove", "fancy feast", 18, :g)
 			cat << Item.new("fuel bottle", "soda bottle", 28, :g)
 			cat << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
 
-			weight = cat.pack_weight
+			weight = cat.base_weight
 			weight.grams.must_equal 46
 		end
 
@@ -114,13 +114,13 @@ module PackList
 			weight.grams.must_be_close_to 387, 0.5
 		end
 
-		it 'does not include worn items in pack weight' do
+		it 'does not include worn items in base weight' do
 			cat = Category.new("Clothing")
 			cat << Item.new("socks", "wool socks", 85, :g, :worn)
 			cat << Item.new("shirt", "short sleeves", 180, :g, :worn)
 			cat << Item.new("extra socks", "wool socks", 85, :g)
 
-			weight = cat.pack_weight
+			weight = cat.base_weight
 			weight.grams.must_equal 85
 		end
 
@@ -175,7 +175,7 @@ module PackList
 			total.ounces.must_be_close_to 28, 0.5
 		end
 
-		it 'does not include consumable and worn items in pack weight' do
+		it 'does not include consumable and worn items in base weight' do
 			c1 = Category.new("Cooking")
 			c1 << Item.new("stove", "fancy feast", 18, :g)
 			c1 << Item.new("fuel bottle", "soda bottle", 28, :g)
@@ -189,7 +189,7 @@ module PackList
 			pack = PackList.new "Fall backpacking trip"
 			pack << c1 << c2
 
-			weight = pack.pack_weight
+			weight = pack.base_weight
 			weight.grams.must_equal 131
 		end
 

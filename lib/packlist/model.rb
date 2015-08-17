@@ -98,7 +98,7 @@ module PackList
       items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
     end
 
-    def pack_weight
+    def base_weight
       items = @items.reject {|item| item.worn? || item.consumable? }
       items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
     end
@@ -131,8 +131,8 @@ module PackList
       empty? ? Weight.zero : @categories.collect {|category| category.consumable_weight}.reduce(:+)
     end
 
-    def pack_weight
-      empty? ? Weight.zero : @categories.collect {|category| category.pack_weight}.reduce(:+)
+    def base_weight
+      empty? ? Weight.zero : @categories.collect {|category| category.base_weight}.reduce(:+)
     end
 
   end
