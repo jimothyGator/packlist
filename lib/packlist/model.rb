@@ -5,10 +5,6 @@ module PackList
     @@weight_conversions = {lb: 453.592, oz: 453.592 / 16, kg: 1000, g: 1}
     attr_reader :quantity, :units
 
-    def self.zero
-      ZERO
-    end
-
     def initialize(quantity, units)
       raise ArgumentError, "Invalid units: #{units}" unless @@weight_conversions.key?(units)
       @quantity, @units = quantity, units
@@ -85,7 +81,7 @@ module PackList
     end
 
     def total_weight
-      empty? ? Weight.zero : @items.collect {|item| item.total_weight}.reduce(:+)
+      empty? ? Weight::ZERO : @items.collect {|item| item.total_weight}.reduce(:+)
     end
 
     def total_pack_weight
@@ -94,17 +90,17 @@ module PackList
 
     def worn_weight
       items = @items.select {|item| item.worn? }
-      items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
+      items.empty? ? Weight::ZERO : items.collect {|item| item.total_weight}.reduce(:+)
     end
 
     def consumable_weight
       items = @items.select {|item| item.consumable? }
-      items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
+      items.empty? ? Weight::ZERO : items.collect {|item| item.total_weight}.reduce(:+)
     end
 
     def base_weight
       items = @items.reject {|item| item.worn? || item.consumable? }
-      items.empty? ? Weight.zero : items.collect {|item| item.total_weight}.reduce(:+)
+      items.empty? ? Weight::ZERO : items.collect {|item| item.total_weight}.reduce(:+)
     end
 
   end
@@ -124,7 +120,7 @@ module PackList
     end
 
     def total_weight
-      empty? ? Weight.zero : @categories.collect {|category| category.total_weight}.reduce(:+)
+      empty? ? Weight::ZERO : @categories.collect {|category| category.total_weight}.reduce(:+)
     end
 
     def total_pack_weight
@@ -132,15 +128,15 @@ module PackList
     end
 
     def worn_weight
-      empty? ? Weight.zero : @categories.collect {|category| category.worn_weight}.reduce(:+)
+      empty? ? Weight::ZERO : @categories.collect {|category| category.worn_weight}.reduce(:+)
     end
 
     def consumable_weight
-      empty? ? Weight.zero : @categories.collect {|category| category.consumable_weight}.reduce(:+)
+      empty? ? Weight::ZERO : @categories.collect {|category| category.consumable_weight}.reduce(:+)
     end
 
     def base_weight
-      empty? ? Weight.zero : @categories.collect {|category| category.base_weight}.reduce(:+)
+      empty? ? Weight::ZERO : @categories.collect {|category| category.base_weight}.reduce(:+)
     end
 
   end
