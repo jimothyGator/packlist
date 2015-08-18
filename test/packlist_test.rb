@@ -193,6 +193,25 @@ module PackList
 			weight.grams.must_equal 131
 		end
 
+		it 'calculates pack weight, including carried and consumable' do
+			c1 = Category.new("Cooking")
+			c1 << Item.new("stove", "fancy feast", 18, :g)
+			c1 << Item.new("fuel bottle", "soda bottle", 28, :g)
+			c1 << Item.new("fuel", "alcohol", 24.2, :g, :consumable, quantity: 16)
+
+			c2 = Category.new("Clothing")
+			c2 << Item.new("socks", "wool socks", 85, :g, :worn)
+			c2 << Item.new("shirt", "short sleeves", 180, :g, :worn)
+			c2 << Item.new("extra socks", "wool socks", 85, :g)
+
+			pack = PackList.new "Fall backpacking trip"
+			pack << c1 << c2
+
+			weight = pack.total_pack_weight
+			weight.grams.must_be_close_to 518, 0.5
+		end
+
+
 		it 'only includes consumable items in consumable weight' do
 			c1 = Category.new("Cooking")
 			c1 << Item.new("stove", "fancy feast", 18, :g)
