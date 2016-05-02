@@ -36,16 +36,16 @@
 			</div>
 		</header>
 
-		<% for categories in category_lists %>
 		<div class="categories">
-			<% for category in categories %>
+			<% for category in packlist %>
 			<div class="category">
 				<h2><%= category.name %></h2>
-				
+
 				<table>
 					<tfoot>
 						<tr>
-							<td class="pl-subtotal" colspan="3">Subtotal</td>
+							<td colspan="3"></td>
+							<td class="pl-subtotal">Subtotal</td>
 							<td class="quantity">
 								<%= "#{'%.0f' % category.total_quantity}" %>
 							</td>
@@ -70,9 +70,11 @@
 								C
 								<% end %>
 							</td>
-							<td>
-								<p class="item-name"><%= item.name %></p>
-								<p class="item-description"><%= item.description %></p>
+							<td class="item-name">
+								<%= item.name %>
+							</td>
+							<td class="item-description">
+								<%= item.description %>
 							</td>
 							<td class="quantity">
 								<% if item.quantity != 1 %>
@@ -92,6 +94,5 @@
 			</div>
 			<% end %>
 		</div>
-		<% end %>
 </body>
 </html>

@@ -18,7 +18,7 @@ module PackList
 		def save_to(filename)
 			css = read_stylesheet
 
-			context = {packlist: @packlist, styles: css, category_lists: split_categories}
+			context = {packlist: @packlist, styles: css, category_lists: [@packlist.categories]}
 
 			File.open(filename, 'w') do |file|
 				file.write(@template.result(context))
@@ -54,10 +54,8 @@ module PackList
 		def read_stylesheet
 			sass_options = {
 				syntax: :scss,
-				load_paths: [ 
-					stylesheets_path("bourbon"), 
+				load_paths: [
 					stylesheets_path("packlist"),
-					stylesheets_path("neat"),
 				]
 			}
 			template_path = File.join(stylesheets_path('packlist'), 'styles.scss')

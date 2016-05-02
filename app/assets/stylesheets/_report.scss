@@ -1,25 +1,54 @@
-div.categories {
-		@include span-columns(12);
-    @include media($desktop) {
-		@include span-columns(6);
-	}
+body {
+  font-family: system, -apple-system, BlinkMacSystemFont,
+      "Helvetica Neue", "Lucida Grande";
+}
 
-    @media print {
-        @include span-columns(6);
-    	
-    }
+div.categories,
+header {
+  margin: 1em 2em;
+}
+
+
+div.categories {
+		// @include span-columns(12);
+   //  @include media($desktop) {
+  	// 	@include span-columns(6);
+  	// }
+
+   //  @media print {
+   //      @include span-columns(6);
+   //  }
 }
 
 header {
-	@include span-columns(12);
+	// @include span-columns(12);
+}
+
+table {
+  tr {
+    td + td,
+    th + th,
+    th + td,
+    td + th {
+      padding-left: 1em;
+    }
+  }
 }
 
 .summary {
-    @include media($desktop) {
-		@include span-columns(6);
-		@include clearfix;
-		clear: both;
-	}
+  table {
+    width: 100%;
+    max-width: 600px;
+
+    th {
+      text-align: right;
+    }
+  }
+ //    @include media($desktop) {
+ //  		// @include span-columns(6);
+ //  		@include clearfix;
+ //  		clear: both;
+	// }
 }
 
 h2 {
@@ -34,62 +63,85 @@ td.pl-item-weight {
 }
 
 div.category {
-	$checkmark-column: 1;
-	$type-column: 2;
-	$name-column: 3;
-	$quantity-column: 4;
-	$gram-weight-column: 5;
-	$ounce-weight-column: 6;
+	$checkmark-column:     1;
+	$type-column:          2;
+	$name-column:          3;
+  $description-column:   4;
+	$quantity-column:      5;
+	$gram-weight-column:   6;
+	$ounce-weight-column:  7;
 
 	margin-bottom: 2em;
 
-    table {
-    	margin-top: 0;
+  table {
+  	margin-top: 0;
+    table-layout: auto;
+    width: 100%;
+    border-collapse: collapse;
+    line-height: 1.6;
 
-    	p {
-    		margin: 0;
-    	}
+  	p {
+  		margin: 0;
+  	}
 
-    	.item-name {
-    		font-weight: bold;
-    	}
+  	.item-name {
+  		font-weight: bold;
+  	}
 
-    	tfoot {
-    		font-weight: bold;
+  	tfoot {
+  		font-weight: bold;
 
-    		td {
-    			text-align: right;
-    			border-top: solid 2px #666;
-    		}
-    	}
+      td.pl-subtotal {
+        text-align: left;
+        font-size: 1.1em;
+      }
 
-    	tbody {
+  		td {
+  			text-align: right;
+  			border-top: solid 2px #333;
+  		}
+
+      tr {
+        border-bottom: solid 1px #333;
+      }
+
+  	}
+
+  	tbody {
     	// Checkmark
-	    	td:nth-child(#{$checkmark-column}) {
-	    		width: 2em;
-	    	}
+    	td:nth-child(#{$checkmark-column}) {
+    		// width: 2em;
+    	}
 
-	    	td:nth-child(#{$quantity-column}) {
-	    		width: 3em;
-	    	}
+      tr {
+        border-bottom: solid 1px #ddd;
+      }
 
-	    	td:nth-child(#{$type-column}) {
-	    		width: 2em;
-	    		font-size: 125%;
-	    		font-weight: bold;
-	    	}
+    	td:nth-child(#{$quantity-column}) {
+    		// width: 3em;
+    	}
 
-	    	td:nth-child(#{$name-column}) {
-	    		width: auto;
-	    	}
+    	td:nth-child(#{$type-column}) {
+    		// width: 2em;
+    		font-size: 125%;
+    		font-weight: bold;
+    	}
 
-	    	td:nth-child(#{$gram-weight-column}) {
-	    		width: 6em;
-	    	}
+      td:nth-child(#{$name-column}) {
+        // width: 15em;
+      }
 
-	    	td:nth-child(#{$ounce-weight-column}) {
-	    		width: 5em;
-	    	}
-	    }
+      td:nth-child(#{$description-column}) {
+        width: auto;
+      }
+
+    	td:nth-child(#{$gram-weight-column}) {
+    		// width: 6em;
+    	}
+
+    	td:nth-child(#{$ounce-weight-column}) {
+    		// width: 5em;
+    	}
     }
+  }
 }
