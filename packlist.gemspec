@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jim Cushing"]
   spec.email         = ["jimothy@mac.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Create gear lists for your next backpacking adventure."
+  spec.description   = "Create gear lists for your next backpacking adventure."
+  # spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -30,9 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tilt-handlebars", "~> 1.4"
   spec.add_dependency "erubis", "~> 2.7"
   spec.add_dependency 'sass'
-  # spec.add_dependency 'bourbon'
-  # spec.add_dependency 'neat'
-  # spec.add_dependency 'bitters'
+  spec.add_dependency 'tilt', '~> 2.0'
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"

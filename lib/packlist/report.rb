@@ -2,6 +2,8 @@ require 'packlist/model'
 require 'packlist/utils'
 require 'erubis'
 require 'sass'
+require 'tilt'
+require 'erb'
 
 module PackList
 	class Report
@@ -10,9 +12,12 @@ module PackList
 		def initialize(packlist)
 			@packlist = packlist
 
+
 			template_path = File.join(templates_path('packlist'), 'report.html.erb')
-			input = File.read(template_path)
-			@template = Erubis::Eruby.new(input)    # create Eruby object
+			# template_path = "report.html.erb"
+			@template = Tilt.new(template_path)
+			# input = File.read(template_path)
+			# @template = Erubis::Eruby.new(input)    # create Eruby object
 		end
 
 		def save_to(filename)
@@ -21,7 +26,7 @@ module PackList
 			context = {packlist: @packlist, styles: css, category_lists: [@packlist.categories]}
 
 			File.open(filename, 'w') do |file|
-				file.write(@template.result(context))
+				file.write(@template.render(nil, context))
 			end
 		end
 
