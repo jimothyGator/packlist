@@ -10,27 +10,15 @@ header {
 
 
 div.categories {
-		// @include span-columns(12);
-   //  @include media($desktop) {
-  	// 	@include span-columns(6);
-  	// }
-
-   //  @media print {
-   //      @include span-columns(6);
-   //  }
 }
 
 header {
-	// @include span-columns(12);
 }
 
 table {
   tr {
-    td + td,
-    th + th,
-    th + td,
-    td + th {
-      padding-left: 1em;
+    td, th {
+      padding: 0.25em;
     }
   }
 }
@@ -44,11 +32,6 @@ table {
       text-align: right;
     }
   }
- //    @include media($desktop) {
- //  		// @include span-columns(6);
- //  		@include clearfix;
- //  		clear: both;
-	// }
 }
 
 h1,
@@ -67,24 +50,18 @@ h2 {
 
 
 td.quantity,
-td.pl-item-weight {
+td.item-weight {
 	text-align: right;
 }
 
 div.category {
 	$checkmark-column:     1;
-	$type-column:          2;
-	$name-column:          3;
-  $description-column:   4;
-	$quantity-column:      5;
-	$gram-weight-column:   6;
-	$ounce-weight-column:  7;
 
 	margin-bottom: 2em;
 
   table {
   	margin-top: 0;
-    table-layout: auto;
+    table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
     line-height: 1.6;
@@ -100,7 +77,7 @@ div.category {
   	tfoot {
   		font-weight: bold;
 
-      td.pl-subtotal {
+      td.subtotal {
         text-align: left;
         font-size: 1.05em;
       }
@@ -117,39 +94,36 @@ div.category {
   	}
 
   	tbody {
-    	// Checkmark
-    	td:nth-child(#{$checkmark-column}) {
-    		// width: 2em;
-    	}
-
       tr {
         border-bottom: solid 1px #ddd;
       }
 
-    	td:nth-child(#{$quantity-column}) {
-    		// width: 3em;
+    	// Checkmark
+    	td:nth-child(#{$checkmark-column}) {
+    		width: 1em;
     	}
 
-    	td:nth-child(#{$type-column}) {
-    		// width: 2em;
+    	td.quantity {
+    		width: 3em;
+    	}
+
+    	td.item-type {
+    		width: 2em;
+        text-align: center;
     		// font-size: 125%;
     		font-weight: bold;
     	}
 
-      td:nth-child(#{$name-column}) {
+      td.item-name {
         // width: 15em;
       }
 
-      td:nth-child(#{$description-column}) {
+      td.item-description {
         width: auto;
       }
 
-    	td:nth-child(#{$gram-weight-column}) {
-    		// width: 6em;
-    	}
-
-    	td:nth-child(#{$ounce-weight-column}) {
-    		// width: 5em;
+    	td.item-weight {
+    		width: 6em;
     	}
     }
   }

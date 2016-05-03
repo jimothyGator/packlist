@@ -45,7 +45,7 @@
 					<tfoot>
 						<tr>
 							<td colspan="2"></td>
-							<td class="pl-subtotal" colspan="2">Subtotal</td>
+							<td class="subtotal" colspan="2">Subtotal</td>
 							<td class="quantity">
 								<%= "#{'%.0f' % category.total_quantity}" %>
 							</td>
@@ -63,7 +63,7 @@
 							<td>
 								<input type="checkbox">
 							</td>
-							<td class="pl-item-type">
+							<td class="item-type">
 								<% if item.worn? %>
 								W
 								<% elsif item.consumable? %>
@@ -81,10 +81,10 @@
 								<%= item.quantity %>
 								<% end %>
 							</td>
-							<td class="pl-item-weight">
+							<td class="item-weight">
 								<%= "#{'%.0f' % item.total_weight.grams} g" %>
 							</td>
-							<td class="pl-item-weight">
+							<td class="item-weight">
 								<%= "#{'%.1f' % item.total_weight.ounces} oz" %>
 							</td>
 						</tr>
