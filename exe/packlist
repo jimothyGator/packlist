@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'packlist'
+
+def output_filename(filename)
+  basename = File.basename(filename, ".*")
+  dirname = File.dirname(filename)
+  File.join(dirname, "#{basename}.html")
+end
+
+ARGV.each do |file| 
+  pack = PackList::DSL.load(file)
+  report = PackList::Report.new pack
+
+  report.save_to(output_filename(file))
+end

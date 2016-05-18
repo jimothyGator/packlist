@@ -121,10 +121,10 @@ module PackList
     attr_reader :categories
     def_delegators :@categories, :each, :<<, :include?, :empty?
 
-    def initialize(name, description=nil)
+    def initialize(name, description=nil, categories=[])
       @name, @description = name, description
 
-      @categories = []
+      @categories = categories
     end
 
     def total_weight

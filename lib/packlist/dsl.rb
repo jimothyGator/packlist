@@ -1,58 +1,83 @@
+require 'packlist/model'
+
 module PackList
-  class PackBuilder
-    attr_reader :pack
-
-    def initialize(name, description, &block)
-      @pack = PackList.new(name, description)
-      instance_eval(&block)
+  module DSL
+    def packlist(&block)
+      builder = PackBuilder.new &block
+      builder.build
     end
+    module_function :packlist
 
-    def category(name, description=nil, &block)
-      builder = CategoryBuilder.new name, description, &block
-      @pack << builder.category
-    end
-  end
+    class PackBuilder
+      def initialize(&block)
+        @categories = []
+        if block_given?
+          instance_eval &block
+        end
+      end
 
+      def name(name)
+        @name = name
+        self
+      end
 
-  class CategoryBuilder
-    attr_reader :category
+      def description(description)
+        @description = description
+        self
+      end
 
-    def initialize(name, description, &block)
-      @category = Category.new name, description
-      if block_given?
-        instance_eval(&block)
+      def build
+        PackList.new @name, @description, @categories
+      end
+
+      def category(name, description=nil, &block)
+        cat_builder = CategoryBuilder.new name, description, &block
+        category = cat_builder.build
+        @categories << category
+        category
       end
     end
 
-    def item(name, description, weight, units=:oz, quantity=1)
-      add_item(name, description, weight, units, nil, quantity)
+
+    class CategoryBuilder
+      def initialize(name, description, &block)
+        @category = Category.new name, description
+        if block_given?
+          instance_eval(&block)
+        end
+      end
+
+      def item(name, description, weight, units=:oz, quantity=1)
+        add_item(name, description, weight, units, nil, quantity)
+      end
+
+      def worn(name, description, weight, units=:oz, quantity=1)
+        add_item(name, description, weight, units, :worn, quantity)
+      end
+
+      def consumable(name, description, weight, units=:oz, quantity=1)
+        add_item(name, description, weight, units, :consumable, quantity)
+      end
+
+      def food(name, description, weight, units=:oz, quantity=1)
+        add_item(name, description, weight, units, :consumable, quantity)
+      end
+
+      def build
+        @category
+      end
+
+      private 
+
+      def add_item(name, description, weight, units, type, quantity)
+        item = Item.new(name, description, weight, units, type, quantity: quantity)
+        @category << item
+      end
+
     end
 
-    def worn(name, description, weight, units=:oz, quantity=1)
-      add_item(name, description, weight, units, :worn, quantity)
+    def self.load(filename)
+      instance_eval(File.read(filename), filename)
     end
-
-    def consumable(name, description, weight, units=:oz, quantity=1)
-      add_item(name, description, weight, units, :consumable, quantity)
-    end
-
-    def food(name, description, weight, units=:oz, quantity=1)
-      add_item(name, description, weight, units, :consumable, quantity)
-    end
-
-    private 
-
-    def add_item(name, description, weight, units, type, quantity)
-      item = Item.new(name, description, weight, units, type, quantity: quantity)
-      @category << item
-    end
-
-  end
-
-
-  def self.packlist(name, description=nil, &block)
-    builder = PackBuilder.new name, description, &block
-
-    builder.pack
   end
 end
