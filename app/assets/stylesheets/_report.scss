@@ -48,6 +48,20 @@ h2 {
 	margin-bottom: 0;
 }
 
+svg.icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+
+  &.consumable {
+    fill: #009;
+  }
+
+  &.worn {
+    fill: #065;
+  }
+}
+
 
 td.quantity,
 td.item-weight {

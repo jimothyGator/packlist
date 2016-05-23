@@ -8,6 +8,11 @@
 		</style>
 	</head>
 	<body>
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none">
+			<%= partial "../images/worn.svg" %>
+			<%= partial "../images/consumed.svg" %>
+		</svg>
+
 		<header>
 			<h1><%= packlist.name %></h1>
 			<p><%= packlist.description %></p>
@@ -66,9 +71,13 @@
 							</td>
 							<td class="item-type">
 								<% if item.worn? %>
-								W
+									<svg class="icon worn">
+										<use xlink:href="#worn" />
+									</svg>
 								<% elsif item.consumable? %>
-								C
+									<svg class="icon consumable">
+										<use xlink:href="#consumed" />
+									</svg>
 								<% end %>
 							</td>
 							<td class="item-name">
