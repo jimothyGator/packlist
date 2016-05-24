@@ -16,93 +16,109 @@
 		<header>
 			<h1><%= packlist.name %></h1>
 			<p><%= packlist.description %></p>
-			<div class="summary">
-				<h2>Summary</h2>
-				<table class="horizontal">
-					<tr>
-						<th>Base weight</th>
-						<td class="quantity"><%= "#{'%.1f' % packlist.base_weight.pounds} lb" %></td>
-
-						<th>Items</th>
-						<td><%= packlist.item_count %></td>
-					</tr>
-					<tr>
-						<th>Max pack weight</th>
-						<td class="quantity"><%= "#{'%.1f' % packlist.total_pack_weight.pounds} lb" %></td>
-
-						<th>Total Quantity</th>
-						<td><%= packlist.total_quantity%></td>
-
-					</tr>
-					<tr>
-						<th>Max weight</th>
-						<td class="quantity"><%= "#{'%.1f' % packlist.total_weight.pounds} lb" %></td>
-					</tr>
-				</table>
-			</div>
 		</header>
 
-		<div class="categories">
-			<% for category in packlist %>
-			<div class="category">
-				<h2><%= category.name %></h2>
-
+		<section>
+			<div class="summary">
 				<table>
+					<thead>
+						<tr>
+							<th>Category</th>
+							<th>Weight</th>
+						</tr>
+					</thead>
 					<tfoot>
 						<tr>
-							<td colspan="2"></td>
-							<td class="subtotal" colspan="2">Subtotal</td>
-							<td class="quantity">
-								<%= "#{'%.0f' % category.total_quantity}" %>
-							</td>
-							<td class="numeric">
-								<%= "#{'%.0f' % category.total_weight.grams} g" %>
-							</td>
-							<td class="numeric">
-								<%= "#{'%.2f' % category.total_weight.pounds} lb" %>
-							</td>
+							<td>Base</td>
+							<td class="weight"><%= packlist.base_weight.lb %></td>
+						</tr>
+						<tr>
+							<td>Consumable</td>
+							<td class="weight"><%= packlist.consumable_weight.lb %></td>
+						</tr>
+						<tr>
+							<td>Worn</td>
+							<td class="weight"><%= packlist.worn_weight.lb %></td>
+						</tr>
+						<tr>
+							<td>Max Pack Weight</td>
+							<td class="weight"><%= packlist.total_pack_weight.lb %></td>
+						</tr>
+						<tr>
+							<td>Total</td>
+							<td class="weight"><%= packlist.total_weight.lb %></td>
 						</tr>
 					</tfoot>
 					<tbody>
-						<% for item in category %>
-						<tr>
-							<td>
-								<input type="checkbox">
-							</td>
-							<td class="item-type">
-								<% if item.worn? %>
-									<svg class="icon worn">
-										<use xlink:href="#worn" />
-									</svg>
-								<% elsif item.consumable? %>
-									<svg class="icon consumable">
-										<use xlink:href="#consumed" />
-									</svg>
-								<% end %>
-							</td>
-							<td class="item-name">
-								<%= item.name %>
-							</td>
-							<td class="item-description">
-								<%= item.description %>
-							</td>
-							<td class="quantity">
-								<% if item.quantity != 1 %>
-								<%= item.quantity %>
-								<% end %>
-							</td>
-							<td class="item-weight">
-								<%= "#{'%.0f' % item.total_weight.grams} g" %>
-							</td>
-							<td class="item-weight">
-								<%= "#{'%.1f' % item.total_weight.ounces} oz" %>
-							</td>
-						</tr>
+						<% for category in packlist %>
+							<tr>
+								<td><%= category.name %></td>
+								<td><%= category.total_weight.lb %></td>
+							</tr>
 						<% end %>
 					</tbody>
 				</table>
 			</div>
-			<% end %>
-		</div>
+
+			<div class="categories">
+				<% for category in packlist %>
+				<div class="category">
+					<h2><%= category.name %></h2>
+
+					<table>
+						<tfoot>
+							<tr>
+								<td colspan="2"></td>
+								<td class="subtotal" colspan="3">Subtotal</td>
+								<td class="numeric">
+									<%= category.total_weight.g %>
+								</td>
+								<td class="numeric">
+									<%= category.total_weight.lb %>
+								</td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<% for item in category %>
+							<tr>
+								<td>
+									<input type="checkbox">
+								</td>
+								<td class="item-type">
+									<% if item.worn? %>
+										<svg class="icon worn">
+											<use xlink:href="#worn" />
+										</svg>
+									<% elsif item.consumable? %>
+										<svg class="icon consumable">
+											<use xlink:href="#consumed" />
+										</svg>
+									<% end %>
+								</td>
+								<td class="item-name">
+									<%= item.name %>
+								</td>
+								<td class="item-description">
+									<%= item.description %>
+								</td>
+								<td class="quantity">
+									<% if item.quantity != 1 %>
+									<%= item.quantity %>
+									<% end %>
+								</td>
+								<td class="item-weight">
+									<%= item.total_weight.g %>
+								</td>
+								<td class="item-weight">
+									<%= item.total_weight.oz %>
+								</td>
+							</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+				<% end %>
+			</div>
+		</section>
 </body>
 </html>

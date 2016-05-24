@@ -57,21 +57,21 @@ describe "DSL" do
     pl = packlist do
       name "packlist title"
       category "shelter" do
-        item "tent", "Big Agnes Copper Spur UL3", 4, :lb
+        item "tent", "Big Agnes Copper Spur UL3", 4.lb
       end
     end
 
     item = pl.categories.first.items.first;
     item.name.must_equal "tent"
     item.description.must_equal "Big Agnes Copper Spur UL3"
-    item.weight.pounds.must_equal 4
+    item.weight.lb.quantity.must_equal 4
   end   
 
   it "can specify quantity for an item" do
     pl = packlist do
       name "packlist title"
       category "shelter" do
-        item "stakes", "MSR Mini Groundhog", 10, :g, 6
+        item "stakes", "MSR Mini Groundhog", 10.g, 6
       end
     end
 
@@ -83,7 +83,7 @@ describe "DSL" do
     pl = packlist do
       name "packlist title"
       category "clothing" do
-        worn "shirt", "short sleeve shirt", 6, :oz
+        worn "shirt", "short sleeve shirt", 6.oz
       end
     end
 
@@ -96,7 +96,7 @@ describe "DSL" do
     pl = packlist do
       name "packlist title"
       category "food" do
-        consumable "candy", "M&Ms", 2, :oz
+        consumable "candy", "M&Ms", 2.oz
       end
     end
 
@@ -109,7 +109,7 @@ describe "DSL" do
     pl = packlist do
       name "packlist title"
       category "food" do
-        food "candy", "M&Ms", 2, :oz
+        food "candy", "M&Ms", 2.oz
       end
     end
 

@@ -47,21 +47,19 @@ module PackList
         end
       end
 
-      def item(name, description, weight, units=:oz, quantity=1)
-        add_item(name, description, weight, units, nil, quantity)
+      def item(name, description, weight, quantity=1)
+        add_item(name, description, weight, :item, quantity)
       end
 
-      def worn(name, description, weight, units=:oz, quantity=1)
-        add_item(name, description, weight, units, :worn, quantity)
+      def worn(name, description, weight, quantity=1)
+        add_item(name, description, weight, :worn, quantity)
       end
 
-      def consumable(name, description, weight, units=:oz, quantity=1)
-        add_item(name, description, weight, units, :consumable, quantity)
+      def consumable(name, description, weight=:oz, quantity=1)
+        add_item(name, description, weight, :consumable, quantity)
       end
 
-      def food(name, description, weight, units=:oz, quantity=1)
-        add_item(name, description, weight, units, :consumable, quantity)
-      end
+      alias_method :food, :consumable
 
       def build
         @category
@@ -69,15 +67,15 @@ module PackList
 
       private 
 
-      def add_item(name, description, weight, units, type, quantity)
-        item = Item.new(name, description, weight, units, type, quantity: quantity)
+      def add_item(name, description, weight, type, quantity)
+        item = Item.new(name, description, weight, type, quantity: quantity)
         @category << item
       end
 
     end
 
     def self.load(filename)
-      instance_eval(File.read(filename), filename)
+      instance_eval(File.read(filename, encoding: "UTF-8"), filename)
     end
   end
 end
