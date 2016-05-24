@@ -1,5 +1,5 @@
 body {
-  font-family: system;
+  font-family: system, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Lucida Grande", sans-serif;
   font-size: 10pt;
 }
 
@@ -74,7 +74,7 @@ table {
     }
 
     tbody {
-      font-weight: 200;
+      font-weight: 400;
       tr {
         border-color: #ddd;
         border-style: dotted;
@@ -147,7 +147,7 @@ div.category {
   	}
 
   	tfoot {
-  		font-weight: 700;
+  		font-weight: 600;
 
       td.subtotal {
         text-align: left;
@@ -182,8 +182,6 @@ div.category {
     	td.item-type {
     		width: 2em;
         text-align: center;
-    		// font-size: 125%;
-    		font-weight: bold;
     	}
 
       td.item-name {
@@ -192,7 +190,7 @@ div.category {
 
       td.item-description {
         width: auto;
-        font-weight: 200;
+        font-weight: 400;
       }
 
     	td.item-weight {
