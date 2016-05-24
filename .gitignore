@@ -10,3 +10,4 @@
 .pryrc
 mypacks
 .sass-cache
+docs/*.html
